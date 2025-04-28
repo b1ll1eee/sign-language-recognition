@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLR</title>
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- icon= -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="nav_logo">
+            <a href="{% url 'index' %}"><img src="{% static 'logo.png' %}" alt=""> </a>
+            <a href="{% url 'index' %}">SLR <span>Project</span></a>
+        </div>
+        <form class="search_box" action="/search" method="GET">
+            <input type="text" name="search" placeholder="Search here">
+            <button type="submit" class="fa fa-search"
+            style="font-size: 20px;color: #255FB2; padding: 8px; border: 1px solid white;"></button>
+
+        </form>
+        <ul class="nav">
+            <!--  url 'name in path home/urls.py ' -->
+            <li><a href="{% url 'index' %}">หน้าหลัก</a></li>
+            <li><a href="{% url 'about' %}">เกี่ยวกับ</a></li>
+            <li><a href="{% url 'team' %}">ทีมผู้พัฒนา</a></li>
+            <li><a href="{% url 'ai' %}">ผลงานของเรา</a></li>
+            <li><a href="{% url 'action' %}">ท่าภาษามือ</a></li>
+
+        </ul>
+
+    </div>
+    <div class="section team">
+
+        <h1>ทีมผู้พัฒนา</h1>
+        <div class="team_top">
+            <div class="card_top">
+                <img src="{% static 'IMG_4801.jpg' %}">
+                <h2>อลิสา กระจ่างแจ่ม</h2>
+                <h4>
+                    ผู้จัดการโครงการ</h4>
+                <a href="alisa.kaj@ku.th"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://github.com/NewAlisa" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+
+
+            </div>
+            <div class="card_top">
+                <img src="{% static 'S__30720011.jpg' %}">
+                <h2>นาย โสภณวิชญ์ ควันไชย</h2>
+                <h4>นักพัฒนา</h4>
+                <a href="sophonwit.k@ku.th">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a href="https://github.com/sophonwit379"target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+
+            </div>
+            <div class="card_top">
+                <img src="{% static 'S__30720008.jpg' %}">
+                <h2>ณัฐวุฒิ รอดเลิศ</h2>
+                <h4>นักพัฒนา</h4>
+
+                <a href="nattawut.rod@ku.th">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a href="https://github.com/ntwww">
+                    <i class="fab fa-github"></i>
+                </a>
+
+            </div>
+        </div>
+        <div class="team_bot">
+            <div class="card_bot">
+                <img src="{% static 'S__30720010.jpg' %}">
+                <h2>เกริก กลมเกลี้ยง</h2>
+
+                <h4>นักพัฒนา</h4>
+                <a href="krirk.k@ku.th">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a href="https://github.com/ziedshiro">
+                    <i class="fab fa-github"></i>
+                </a>
+
+
+
+            </div>
+            <div class="card_bot">
+                <img src="{% static 'IMG_5161.jpg' %}">
+                <h2>อัคมาลริซาล รัมลี
+                </h2>
+                <h4>ผู้สนับสนุน</h4>
+
+                <a href="akmanrisal.r@ku.th">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a href="https://github.com/smanmonet">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <style>
+                .search_box button {
+            color: #fff;
+            font-size: 4px;
+            background-color: #fff;
+            height: 100%;
+            padding: 8px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1;
+
+        }
+        .search_box button::after {
+            height: 100%;
+            width: 0%;
+            content: '';
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: -1;
+            transition: .3s;
+
+        }
+
+        .search_box button:hover::after {
+            width: 100%;
+        }
+
+        .search_box button:hover {
+            color: #255FB2;
+        }
+    </style>
+</body>
+
+</html>

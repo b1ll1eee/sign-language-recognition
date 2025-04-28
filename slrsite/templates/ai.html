@@ -1,0 +1,268 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>SLR</title>
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- icon= -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav_logo">
+            <a href="{% url 'index' %}"><img src="{% static 'logo.png' %}" alt=""> </a>
+            <a href="{% url 'index' %}">SLR <span>Project</span></a>
+        </div>
+        <form class="search_box" action="/search" method="GET">
+            <input type="text" name="search" placeholder="Search here">
+            <button type="submit" class="fa fa-search"
+            style="font-size: 20px;color: #255FB2; padding: 8px; border: 1px solid white;"></button>
+
+        </form>
+        <ul class="nav">
+            <!--  url 'name in path home/urls.py ' -->
+            <li><a href="{% url 'index' %}">หน้าหลัก</a></li>
+            <li><a href="{% url 'about' %}">เกี่ยวกับ</a></li>
+            <li><a href="{% url 'team' %}">ทีมผู้พัฒนา</a></li>
+            <li><a href="{% url 'ai' %}">ผลงานของเรา</a></li>
+            <li><a href="{% url 'action' %}">ท่าภาษามือ</a></li>
+
+        </ul>
+
+    </div>
+    <div class="section ai">
+        <h1>SLR language</h1>
+        <div class="ai-top">
+            <div class="top-left">
+                <h1 id="wait" >กล้องปิดการใช้งาน</h1>
+                <div class="frame">
+                    <img id="demo" src="{% static 'camera-off.svg' %}" alt="stream">
+                </div>
+            </div>
+            <div class="top-right" id ='top-right'>
+                <div class="btnnn">
+                    <button class="button-ai" onclick="video_on()">เปิดกล้อง</button>
+                    <button class="button-ai" onclick="video_off()">ปิดกล้อง</button>
+
+                </div>
+                <div class="container">
+                    <div class="controls">
+                        <div class="result" ><h2 style="font-weight: 400">ผลลัพธ์คือ : </h2></div>
+                        <div id="data" style="font-size: 25px;"></div>
+                    </div>
+                </div>
+                <button id="ok" type="submit" class="fa fa-volume-up fa-1x"></button>
+                <button type="submit" class="control fas fa-microphone fa-1x"></button>
+            </div>
+        </div>
+
+        <!-- <a href="{% url 'index' %}"><button class="button-32">กลับสู่เว็บไซค์</button></a> -->
+        
+    </div>
+    <script>
+        let submitBtn = document.getElementById("ok")
+        let btnElem=document.querySelector('.control')
+        let status=0
+        let data1=[]
+        let data2=[]
+
+        time=0
+        function video_on() {
+            status=1
+            time=0
+            document.getElementById("demo").src = "{% url 'stream' %}";
+            document.getElementById("wait").innerHTML = "กำลังเปิดกล้อง. . . . .";
+
+            setInterval(function(){
+                $.ajax({
+                type:"GET",
+                url: "ai/",
+                })
+                .done(Response =>{
+                data1=Response
+                if(time>1){
+                    if(JSON.stringify(data1) === JSON.stringify(data2)){
+                        document.getElementById("data").innerHTML =null;
+                    }
+                    else{
+                        document.getElementById("data").innerHTML =data1['data'];
+                    }
+                } 
+                time++
+                })
+            },1000)
+            }
+
+        function video_off() {
+            time=0
+            status=0
+            document.getElementById("demo").src = "{% static 'camera-off.svg' %}";
+            document.getElementById("wait").innerHTML = "Turned off";
+            document.getElementById("data").innerHTML =null;
+            data2=data1
+            data1=null
+        }
+
+        submitBtn.addEventListener("click",()=>{
+            // let voices = speechSynthesis.getVoices();
+            if(data1.data!==undefined && status==1){
+                console.log(data1)
+                var audio = new Audio('https://translate.google.com/translate_tts?ie=UTF-8&tl=th&client=tw-ob&q='+data1.data)
+            }
+            else{
+                var audio = new Audio('https://translate.google.com/translate_tts?ie=UTF-8&tl=th&client=tw-ob&q=โปรดเปิดกล้อง')
+            }
+            audio.play()
+        });
+
+        btnElem.addEventListener("click",()=>{
+            var speech = true;
+            window.SpeechRecognition = window.webkitSpeechRecognition;
+            var recognition = new SpeechRecognition()
+            recognition.interi,Results = true
+            recognition.lang='th-TH' 
+            const isPausing=btnElem.classList.contains('fa-microphone')
+            if(isPausing){
+                recognition.start()
+                btnElem.classList.remove('fa-microphone')
+                btnElem.classList.add('fa-microphone-slash')
+                recognition.addEventListener('result',e=>{
+                    const transcript = Array.from(e.results)
+                    .map(result=>result[0])
+                    .map(result=>result.transcript)
+                    console.log(transcript)
+                    if(transcript){
+                        window.location.href = "search?search=" + transcript;
+                    }
+                })
+                    // const textElem=document.querySelector('.text')
+                    // const {transcript}=event.results[0][0]
+                    // if(transcript){
+                    //     window.location.href = "search?search=" + transcript;
+                    // }
+                    // console.log(transcript)
+                    // textElem.innerText=transcript
+            }
+            else{
+                recognition.stop()
+                btnElem.classList.remove('fa-microphone-slash')
+                btnElem.classList.add('fa-microphone')
+            }
+        })
+
+
+        // resumeBtn.addEventListener("click",()=>{
+        //     pauseBtn.style.display="block";
+        //     resumeBtn.style.display="none";
+        //     if(speechSynthesis.pause){
+        //         speechSynthesis.resume();
+        //     }
+        // });
+
+        // pause.addEventListener("click",()=>{
+        //     pauseBtn.style.display="none";
+        //     resumeBtn.style.display="block";
+        //     speechSynthesis.speaking ? speechSynthesis.pause
+        //     ():"";
+        // })
+
+        // (()=>{
+        //     window.SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition
+        //     const recognition=new window.SpeechRecognition()
+        //     const btnElem=document.querySelector('.control')
+        //     function onClick(){
+        //         const isPausing=btnElem.classList.contains('fa-microphone')
+        //         if(isPausing){
+        //             recognition.start()
+        //             btnElem.classList.remove('fa-microphone')
+        //             btnElem.classList.add('fa-microphone-slash')
+        //         }
+        //         else{
+        //             recognition.stop()
+        //             btnElem.classList.remove('fa-microphone-slash')
+        //             btnElem.classList.add('fa-microphone')
+        //         }
+        //     }
+        //     function onResult(event){
+        //         const textElem=document.querySelector('.text')
+        //         const {transcript}=event.results[0][0]
+        //         if(transcript){
+        //             window.location.href = "search?search=" + transcript;
+        //         }
+        //         console.log(transcript)
+        //         textElem.innerText=transcript
+        //     }
+        //     function onEnd(){
+        //         const isRecodering=btnElem.classList.contains('fa-microphone-slash')
+        //         if(isRecodering){
+        //             recognition.start()
+        //         }
+        //     }
+        //     btnElem.addEventListener('click',function(){
+        //         recognition.start()
+        //         console.log('w')
+        //     })
+
+        //     function run(){
+        //         recognition.lang='th-TH'        
+        //         // recognition.addEventListener('result',onResult)
+        //         // recognition.addEventListener('end',onEnd)
+        //         btnElem.addEventListener('click',onClick)
+        //     }
+        //     run()
+        // })()
+
+        </script>
+        <style>
+                    .search_box button {
+            color: #fff;
+            font-size: 4px;
+            background-color: #fff;
+            height: 100%;
+            padding: 8px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1;
+
+        }
+        .search_box button::after {
+            height: 100%;
+            width: 0%;
+            content: '';
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: -1;
+            transition: .3s;
+
+        }
+
+        .search_box button:hover::after {
+            width: 100%;
+        }
+
+        .search_box button:hover {
+            color: #255FB2;
+        }
+        </style>
+</body>
+</html>

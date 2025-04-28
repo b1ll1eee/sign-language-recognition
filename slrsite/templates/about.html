@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLR</title>
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- icon= -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="nav_logo">
+            <a href="{% url 'index' %}"><img src="{% static 'logo.png' %}" alt=""> </a>
+            <a href="{% url 'index' %}">SLR <span>Project</span></a>
+        </div>
+        <form class="search_box" action="/search" method="GET">
+            <input type="text" name="search" placeholder="Search here">
+            <button type="submit" class="fa fa-search"
+            style="font-size: 20px;color: #255FB2; padding: 8px; border: 1px solid white;"></button>
+
+        </form>
+        <ul class="nav">
+            <!--  url 'name in path home/urls.py ' -->
+            <li><a href="{% url 'index' %}">หน้าหลัก</a></li>
+            <li><a href="{% url 'about' %}">เกี่ยวกับ</a></li>
+            <li><a href="{% url 'team' %}">ทีมผู้พัฒนา</a></li>
+            <li><a href="{% url 'ai' %}">ผลงานของเรา</a></li>
+            <li><a href="{% url 'action' %}">ท่าภาษามือ</a></li>
+
+        </ul>
+
+    </div>
+    <div class="section about">
+        <h1>เกี่ยวกับเรา</h1>
+        <div class="about-main">
+            <div class="about-main-left">
+                <h2>จุดประสงค์</h2>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เนื่องจากพวกเราเล็งเห็นถึงปัญหาของการสื่อสารด้วยภาษามือในปัจจุบัน
+                    อาจจะมีกลุ่มคนบางกลุ่มที่ยังไม่เข้าใจและยังไม่สามารถใช้ในการสื่อสารได้พวกเราจึงสร้างเว็บนี้ขึ้นมา
+                    ที่รองรับ Ai ใช้ในการประมวลผลวิดิโอแบบเรียลไทม์และยังสามารถค้นหาวิดิโอเพื่อแสดงผลมาบนเว็บ
+                    เพื่อทำให้กลุ่มคนทั่วไปบุคคลหูหนวก และบุลคลใบ้สามารถสื่อสารกันง่ายขึ้น</p>
+                <h2>ข้อจำกัด</h2>
+                <h4>- คำในการค้นหาไม่สามารถเป็นประโยคได้ สามารถค้นหาแป็นคำเท่านั้น</h4>
+                <h4>- Ai ไม่รองรับการประมวลด้วยสีหน้า</h4>
+            </div>
+            <div class="about-main-right">
+                <img src="{% static 'about.png' %}" alt="">
+            </div>
+        </div>
+
+    </div>
+    <style>
+        .search_box button {
+            color: #fff;
+            font-size: 4px;
+            background-color: #fff;
+            height: 100%;
+            padding: 8px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1;
+
+        }
+
+        .search_box button::after {
+            height: 100%;
+            width: 0%;
+            content: '';
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: -1;
+            transition: .3s;
+
+        }
+
+        .search_box button:hover::after {
+            width: 100%;
+        }
+
+        .search_box button:hover {
+            color: #255FB2;
+        }
+    </style>
+</body>
+
+</html>

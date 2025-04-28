@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLR</title>
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- icon= -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            body{
+                background-color: #f5f4ea;
+            }
+            h3{
+                text-align:center;
+                color:black;
+                font-size:25px;
+                margin:0;
+                padding-top:10px;
+            }
+            iframe{
+                text-decoration:none;
+            }
+            .product{
+                display:flex;
+                flex-wrap:wrap;
+                width:100%;
+                margin-top: 60px;
+                justify-content:center;
+                align-items:center;
+                 
+            }
+            .content{
+                width:20%;
+                margin:15px;
+                box-sizing:border-box;
+                float:left;
+                text-align:center;
+                border-radius:20px;
+                cursor:pointer;
+                padding-top:10px;
+                box-shadow:0 14px 28px rgba(0,0,0,0.25),0 10px 10px rgba(0,0,0,0.22);
+                transition:.4s;
+                background:white;
+            }
+            .content:hover{
+                box-shadow:0 3px 6px rgba(0,0,0,0.16),0 3px 6px rgba(0,0,0,0.23);
+                transform:translate(0px,-8px);
+            }
+            .search_box button {
+            color: #fff;
+            font-size: 4px;
+            background-color: #fff;
+            height: 100%;
+            padding: 8px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1;
+
+        }
+        .search_box button::after {
+            height: 100%;
+            width: 0%;
+            content: '';
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: -1;
+            transition: .3s;
+
+        }
+
+        .search_box button:hover::after {
+            width: 100%;
+        }
+
+        .search_box button:hover {
+            color: #255FB2;
+        }
+        </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="nav_logo">
+            <a href="{% url 'index' %}"><img src="{% static 'logo.png' %}" alt=""> </a>
+            <a href="{% url 'index' %}">SLR <span>Project</span></a>
+        </div>
+        <form class="search_box" action="/search" method="GET">
+            <input type="text" name="search" placeholder="Search here">
+            <button type="submit" class="fa fa-search"
+            style="font-size: 20px;color: #255FB2; padding: 8px; border: 1px solid white;"></button>
+
+        </form>
+        <ul class="nav">
+            <!--  url 'name in path home/urls.py ' -->
+            <li><a href="{% url 'index' %}">หน้าหลัก</a></li>
+            <li><a href="{% url 'about' %}">เกี่ยวกับ</a></li>
+            <li><a href="{% url 'team' %}">ทีมผู้พัฒนา</a></li>
+            <li><a href="{% url 'ai' %}">ผลงานของเรา</a></li>
+            <li><a href="{% url 'action' %}">ท่าภาษามือ</a></li>
+
+        </ul>
+
+    </div>
+   
+    <div class="product">
+         {% for i in action %}
+         <div class="content">
+            <div class="card">
+                <iframe width="320" height="240"
+                src="{{i.url}}">
+                </iframe>
+                <div>
+                    <h2>{{i.action}}<h3>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</body>
+
+</html>
